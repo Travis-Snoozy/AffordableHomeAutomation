@@ -1,0 +1,1 @@
+g++ -fpic -std=c++11 -march=native -Wall -I../include *.cpp -o pawn-testtool

@@ -1,0 +1,14 @@
+save_raw expect 16 temp.mem
+run
+simio config t clear
+#run
+#simio info t
+#simio config t clear
+# Finished key expansion.
+run
+simio info t
+simio config t clear
+md block 16
+verify_raw temp.mem block
+# Finished encryption/decryption
+reset

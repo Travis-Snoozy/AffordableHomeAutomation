@@ -1,0 +1,1 @@
+g++ -fPIC -shared -std=c++11 -march=native -Wall -lboost_thread -I../include -DBUILD_DLL *.cpp -o platform-hacksaw.so

@@ -1,0 +1,1 @@
+g++ -fpic -std=c++11 -march=native -Wall -ldl -lboost_system -lboost_filesystem -I../include *.cpp -o handaxe

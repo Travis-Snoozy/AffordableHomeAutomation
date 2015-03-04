@@ -1,0 +1,16 @@
+Testing
+-------
+
+Testing works in two phases -- the encryption tests, and the decryption tests. The encryption test files consist of:
+
+- encryption.c (driver code to run under simulation)
+- gcm_enc_tests.mspd (script for loading all the encryption sub-scripts)
+- gcmEncryptExtIV*.mspd (test scripts derived from the NIST verification suite)
+
+The decryption test files consist of:
+
+- decryption.c (driver code to run under simulation)
+- gcm_dec_tests.mspd (script for loading all the decryption subscripts)
+- gcmDecrypt*.mspd (test scripts derived from the NIST verification suite)
+
+For each phase, an appropriate stub program is compiled, and then mspdebug (in simulator mode) is used to load that stub. A series of mspdebug scripts are used to load the test vectors (key, input, expected output), run the stub, and then verify that the expected output matches the actual output. The complete output from mspdebug is stored in output-enc.txt and output-dec.txt. Failed tests will result in the "pass" variable being non-zero (the "1" bit meaning a tag failure, and the "2" bit meaning an encryption failure).

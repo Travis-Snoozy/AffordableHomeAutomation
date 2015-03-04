@@ -1,0 +1,11 @@
+* text=auto
+*.c text
+*.cpp text
+*.h text
+*.mspd text
+*.rsp text
+*.S text
+*.sh text
+*.x text
+README text
+LICENSE text

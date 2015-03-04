@@ -1,0 +1,10 @@
+prog gcmtest/gcmtest.txt
+sym import gcmtest/gcmtest.sym
+simio add tracer t
+setbreak init
+read gcm_operation_breakpoint.mspd
+setbreak verify
+# Run to the start of init
+run
+simio config t clear
+read gcm_current_tests.mspd

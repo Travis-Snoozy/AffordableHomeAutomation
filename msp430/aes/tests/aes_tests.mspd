@@ -1,0 +1,7 @@
+prog aestest/aestest.txt
+sym import aestest/aestest.sym
+simio add tracer t
+setbreak firmware_main
+setbreak firmware_main+0x0c
+setbreak firmware_main+0x18
+read aes_current_tests.mspd

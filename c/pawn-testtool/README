@@ -1,0 +1,7 @@
+Libraries required:
+Boost
+Nettle
+
+The pawn-testtool application is meant to aid in the development of
+node firmware, by allowing otherwise mandatory features of the
+protocol to be turned on and off individually.

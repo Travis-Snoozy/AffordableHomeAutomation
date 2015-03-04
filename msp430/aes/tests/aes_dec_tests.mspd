@@ -1,0 +1,4 @@
+read ECBGFSbox128-dec.mspd
+read ECBKeySbox128-dec.mspd
+read ECBVarKey128-dec.mspd
+read ECBVarTxt128-dec.mspd

@@ -1,0 +1,11 @@
+run
+simio config t clear
+# Finished initialization.
+run
+simio info t
+simio config t clear
+# Finished encryption/decryption
+run
+simio config t clear
+md pass 2
+# Finished verification
