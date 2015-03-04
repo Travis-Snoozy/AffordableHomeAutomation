@@ -220,6 +220,9 @@ void Server::parse(std::shared_ptr<char> parseChunk, io_type io, std::shared_ptr
     size_t len = strlen(&(*parseChunk));
     parser::client_command_parser<char*> p;
     parser::client_command result;
+    // We need to at least set the sequence # in case the client fails to
+    // provide that information. 0 needs to be reserved for this case.
+    result.sequence = 0;
     char* start = parseChunk.get();
     char* end = parseChunk.get() + len;
     std::shared_ptr<boost::asio::streambuf> output_backing(new boost::asio::streambuf);
