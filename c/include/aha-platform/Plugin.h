@@ -1,4 +1,4 @@
-// Copyright © 2013, 2015, Travis Snoozy
+// Copyright © 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,32 +15,18 @@
 
 #pragma once
 
+#include "AhaMacroGlue.h"
+#include "IDevice.h"
+#include "IFunction.h"
+
 namespace ahaplat
 {
-/*!
- * Represents a handle to a platform (plugin).
- */
-class IPlatform
-{
-public:
-    /*!
-     * Gets a brief description of the platform.
-     */
-    virtual const char* getDescription()    const = 0;
+typedef void            (*PDeviceChange)(IFunction*);
+typedef void            (*PPlatformChange)(IDevice*);
 
-    /*!
-     * Gets the name (e.g., one word description) of the platform.
-     */
-    virtual const char* getName()           const = 0;
-
-    /*!
-     * Inform the platform that it may start processing input/sending messages
-     * to the host.
-     */
-    virtual void        start()                   = 0;
-protected:
-private:
-};
+// Platform plug-ins need to implement this function.
+#define AHA_PLATFORM_INITIALIZE AHA_RUNTIME_EXPORT(ahaplat::IPlatform*, GetPlatform, (ahaplat::PPlatformChange platformChange, ahaplat::PDeviceChange deviceChange))
+AHA_PLATFORM_INITIALIZE;
 }
 
 // vim: set expandtab ts=4 sts=4 sw=4 fileencoding=utf-8:

@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "aha-platform/AhaMacroGlue.h"
 #include "aha-platform/IDevice.h"
 #include "aha-platform/IFunction.h"
+#include "aha-platform/Plugin.h"
 
 #include "Server.h"
 
