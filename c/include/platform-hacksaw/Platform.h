@@ -47,7 +47,7 @@ public:
 private:
     PPlatformChange     m_platformChange;
     PDeviceChange       m_deviceChange;
-    std::map<uint64_t, std::pair<Device*, std::map<uint32_t, Function*>>> m_devices;
+    std::map<uint64_t, std::pair<std::unique_ptr<Device>, std::map<uint32_t, Function*>>> m_devices;
     Server              m_server;
 };
 }

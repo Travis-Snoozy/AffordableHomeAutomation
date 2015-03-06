@@ -34,6 +34,10 @@ Device::Device(const char* name, const char* description, uint64_t serial)
     ::platform->notify(this, true);
 }
 
+Device::~Device()
+{
+}
+
 const char* Device::getDescription() const
 {
     return this->m_description;

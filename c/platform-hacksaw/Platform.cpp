@@ -39,7 +39,7 @@ IDevice* Platform::getDevice(uint64_t device) const
         return nullptr;
     }
 
-    return ((*it).second.first);
+    return ((*it).second.first.get());
 }
 
 const char* Platform::getName() const
@@ -49,8 +49,8 @@ const char* Platform::getName() const
 
 void Platform::iterateDevices(boost::function<void(IDevice*)> dev) const
 {
-    std::for_each(this->m_devices.begin(), this->m_devices.end(), [&](std::pair<uint64_t, std::pair<Device*, std::map<uint32_t, Function*>>> dev_data) {
-        dev(dev_data.second.first);
+    std::for_each(this->m_devices.begin(), this->m_devices.end(), [&](const std::pair<const uint64_t, std::pair<std::unique_ptr<Device>, std::map<uint32_t, Function*>>>& dev_data) {
+        dev(dev_data.second.first.get());
     });
 }
 
@@ -70,14 +70,15 @@ bool Platform::notify(Device* device, bool add)
     bool exists = (this->m_devices.find(device->getSerial()) != this->m_devices.end());
 
     if(add && !exists) {
-        this->m_devices[device->getSerial()].first = device;
+        this->m_devices[device->getSerial()].first.reset(device);
+        this->m_platformChange(device);
     } else if(!add && exists) {
+        this->m_platformChange(device);
         this->m_devices.erase(device->getSerial());
     } else {
         return false;
     }
 
-    this->m_platformChange(device);
     return true;
 }
 

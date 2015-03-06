@@ -29,6 +29,7 @@ namespace ahaplat
 class Device : virtual public IDevice
 {
 public:
+    virtual ~Device();
     virtual const char*         getDescription()            const;
     virtual const char*         getName()                   const;
     virtual IPlatform*          getPlatform()               const;
