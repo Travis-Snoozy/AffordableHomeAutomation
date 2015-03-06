@@ -24,14 +24,46 @@ class IFunction;
 
 namespace ahaplat
 {
+/*!
+ * The base class for device functions, declaring all the data-independent
+ * metadata about the function's purpose.
+ *
+ * You probably don't want to work with this class (including deriving from
+ * it) -- look at the child classes that derive from this class instead.
+ */
 class IFunction
 {
 public:
+    /*!
+     * Gets a brief text description of this function's functionality.
+     */
     virtual const char* getDescription()    const = 0;
+
+    /*!
+     * Gets the unique serial number of the device this function is a part of.
+     */
     virtual uint64_t    getDevice()         const = 0;
+
+    /*!
+     * Gets the function ID of this function within the given device.
+     */
     virtual uint32_t    getId()             const = 0;
+
+    /*!
+     * Gets the name (e.g., one word description) of this function within the device.
+     */
     virtual const char* getName()           const = 0;
+
+    /*!
+     * Gets the platform that this function's device belongs to.
+     */
     virtual IPlatform*  getPlatform()       const = 0;
+
+    /*!
+     * \return true if this function is enabled for "set" commands; false otherwise.
+     *
+     * Gets the read-only status of this function.
+     */
     virtual bool        isReadOnly()        const = 0;
 protected:
 private:

@@ -26,11 +26,26 @@ class IPlatform;
 
 namespace ahaplat
 {
+/*!
+ * Represents a handle to a platform (plugin).
+ */
 class IPlatform
 {
 public:
+    /*!
+     * Gets a brief description of the platform.
+     */
     virtual const char* getDescription()    const = 0;
+
+    /*!
+     * Gets the name (e.g., one word description) of the platform.
+     */
     virtual const char* getName()           const = 0;
+
+    /*!
+     * Inform the platform that it may start processing input/sending messages
+     * to the host.
+     */
     virtual void        start()                   = 0;
 protected:
 private:

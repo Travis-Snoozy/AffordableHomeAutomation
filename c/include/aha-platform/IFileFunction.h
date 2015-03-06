@@ -19,9 +19,16 @@
 
 namespace ahaplat
 {
+/*!
+ * The interface for device functions that provide streaming information,
+ * rather than discrete value readings.
+ */
 class IFileFunction : virtual public IFunction
 {
 public:
+    /*!
+     * Gets the MIME type associated with the data stream this function provides.
+     */
     virtual const char* getMediaType() const = 0;
 protected:
 private:

@@ -26,12 +26,30 @@ class IDevice;
 
 namespace ahaplat
 {
+/*!
+ * The interface that all devices must conform to.
+ */
 class IDevice
 {
 public:
+    /*!
+     * Gets a brief description of the device's functionality.
+     */
     virtual const char* getDescription()    const = 0;
+
+    /*!
+     * Gets the name (e.g., one word description) of this device.
+     */
     virtual const char* getName()           const = 0;
+
+    /*!
+     * Gets the platform plugin that this device is registered to.
+     */
     virtual IPlatform*  getPlatform()       const = 0;
+
+    /*!
+     * Gets the unique serial number that identifies this device within its platform.
+     */
     virtual uint64_t    getSerial(void)     const = 0;
 protected:
 private:
