@@ -82,7 +82,7 @@ bool ValueFunction<T>::platformSetValue(T value)
 
     this->m_value = value;
 
-    ::platform->notify((IValueFunction<T>*)(this));
+    ::platform->notify(this);
 
     return true;
 }

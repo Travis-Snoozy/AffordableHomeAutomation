@@ -28,6 +28,10 @@
 
 namespace ahaplat
 {
+
+class Device;
+class Function;
+
 class Platform : virtual public IPlatform
 {
 public:
@@ -37,13 +41,13 @@ public:
     IDevice*            getDevice(uint64_t device) const;
     virtual const char* getName() const;
     virtual void        iterateDevices(boost::function<void(IDevice*)> dev) const;
-    virtual void        notify(IFunction* func);
-    virtual bool        notify(IDevice* device, bool add);
+    virtual void        notify(Function* func);
+    virtual bool        notify(Device* device, bool add);
     virtual void        start();
 private:
     PPlatformChange     m_platformChange;
     PDeviceChange       m_deviceChange;
-    std::map<uint64_t, std::pair<IDevice*, std::map<uint32_t, IFunction*>>> m_devices;
+    std::map<uint64_t, std::pair<Device*, std::map<uint32_t, Function*>>> m_devices;
     Server              m_server;
 };
 }
