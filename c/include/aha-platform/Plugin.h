@@ -21,11 +21,30 @@
 
 namespace ahaplat
 {
+
+/*!
+ * Function pointer for sending IFunction update notifications.
+ *
+ * This occurs when an IFunction first shows up (i.e., newly-registered device),
+ * and when an IFunction changes value.
+ */
 typedef void            (*PDeviceChange)(IFunction*);
+
+/*!
+ * Function pointer for sending IDevice update notifications.
+ *
+ * This occurs when an IDevice is newly registered, and also when its deleted.
+ */
 typedef void            (*PPlatformChange)(IDevice*);
 
-// Platform plug-ins need to implement this function.
+/*!
+ * \def AHA_PLATFORM_INITIALIZE
+ * Clients should use this macro to declare the function signature for their
+ * plugin's entry point. The plugin will need to declare the body of this
+ * function immediately after this macro.
+ */
 #define AHA_PLATFORM_INITIALIZE AHA_RUNTIME_EXPORT(ahaplat::IPlatform*, GetPlatform, (ahaplat::PPlatformChange platformChange, ahaplat::PDeviceChange deviceChange))
+
 AHA_PLATFORM_INITIALIZE;
 }
 

@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,12 +20,46 @@
 namespace ahaplat
 {
 template <class T>
+/*!
+ * \invariant getMax() > getMin()
+ * \tparam T a comparable value type.
+ *
+ * Represents a device function that returns a bounded value.
+ */
 class IValueFunction : virtual public IFunction
 {
 public:
+    /*!
+     * Gets the largest value this Function supports.
+     *
+     * This function returns an immutable value for its Function object.
+     * getValue() will never return a larger value, and setValue(T) will not
+     * accept a larger value, than this function returns.
+     */
     virtual T       getMax()                const = 0;
+
+    /*!
+     * Gets the smallest value this Function supports.
+     *
+     * This function returns an immutable value for its Function object.
+     * getValue() will never return a smaller value, and setValue(T) will not
+     * accept a smaller value, than this function returns.
+     */
     virtual T       getMin()                const = 0;
+
+    /*!
+     * Gets the current value of this Function.
+     */
     virtual T       getValue()              const = 0;
+
+    /*!
+     * \pre \p newValue <= getMax()
+     * \pre \p newValue >= getMin()
+     * \pre !isReadOnly()
+     * \post getValue() == newValue
+     *
+     * Sets the current value of this Function.
+     */
     virtual bool    setValue(T newValue)          = 0;
 protected:
 private:
