@@ -17,7 +17,7 @@
 MMCU=${MMCU:-msp430g2412}
 # -dp, -dap, and -fdump-tree-all for extra GCC debug output
 #CFLAGS="-mmcu=${MMCU} -nostartfiles -dp -Os -I/usr/msp430-elf/include/"
-CFLAGS="-nostartfiles -dp -Os -I/usr/msp430-elf/include/ -I/usr/msp430/include/"
+CFLAGS="-mmcu=msp430 -nostartfiles -dp -Os -I/usr/msp430-elf/include/ -I/usr/msp430/include/ -L/usr/lib/gcc/msp430-elf/4.9.2/430/ -L/usr/lib/msp430-elf/lib/430/ -L/usr/msp430-elf/lib/430/"
 ASFLAGS="--warn"
 LSFLAGS="-T/usr/msp430/lib/ldscripts/${MMCU}/periph.x,-T/usr/msp430/lib/ldscripts/${MMCU}/memory.x,--sort-section=alignment"
 CPPFLAGS=""
