@@ -1,4 +1,4 @@
-// Copyright © 2014, Travis Snoozy
+// Copyright © 2014, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -60,11 +60,21 @@ namespace testtool {
         command_data_t data;
     } option_set_node_command_t;
 
+    typedef struct transmit_command {
+        std::string node;
+        uint8_t channel;
+        uint8_t address0;
+        uint8_t address1;
+        uint8_t address2;
+        std::string data;
+    } transmit_command_t;
+
     typedef boost::variant<
             option_display_command_t,
             option_display_node_command_t,
             option_set_node_command_t,
-            option_create_node_command_t>
+            option_create_node_command_t,
+            transmit_command_t>
         command_t;
 
     typedef struct node_data {
@@ -84,6 +94,16 @@ BOOST_FUSION_ADAPT_STRUCT(
     (uint32_t, byte2)
     (uint32_t, byte3)
     (uint32_t, byte4)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+    aha::pawn::testtool::transmit_command_t,
+    (std::string, node)
+    (uint8_t, channel)
+    (uint8_t, address0)
+    (uint8_t, address1)
+    (uint8_t, address2)
+    (std::string, data)
 )
 
 BOOST_FUSION_ADAPT_STRUCT(
@@ -118,6 +138,7 @@ namespace grammar {
     using qi::alpha;
     using qi::as_string;
     using qi::attr;
+    using qi::repeat;
     using ascii::char_;
     using aha::pawn::testtool::hex128_t;
     using aha::pawn::testtool::option_set_node_param;
@@ -139,7 +160,8 @@ namespace grammar {
                     option_display
                 |   option_display_node
                 |   option_create_node
-                |   option_set_node;
+                |   option_set_node
+                |   transmit;
 
             option_display =
                     lit("option display all")
@@ -158,6 +180,15 @@ namespace grammar {
                 >>  lexeme[+alpha]
                 >>  option_set_node_symbols
                 >>  qi::lazy(boost::phoenix::bind(&aha::pawn::testtool::grammar::cui_grammar<Iterator>::set_data_mapper, this, _val));
+
+            transmit =
+                    lit("tx")
+                >>  lexeme[+alpha]
+                >>  uint_parser<uint8_t, 16, 2, 2>()
+                >>  uint_parser<uint8_t, 16, 2, 2>()
+                >>  uint_parser<uint8_t, 16, 2, 2>()
+                >>  uint_parser<uint8_t, 16, 2, 2>()
+                >>  lexeme[repeat(1,32)[char_]];
 
             hex_128 =
                     uint_parser<uint32_t, 16, 8, 8>()
@@ -216,6 +247,7 @@ namespace grammar {
         qi::rule<Iterator, option_display_node_command_t(), ascii::space_type> option_display_node;
         qi::rule<Iterator, option_create_node_command_t(), ascii::space_type> option_create_node;
         qi::rule<Iterator, option_set_node_command_t(), ascii::space_type> option_set_node;
+        qi::rule<Iterator, transmit_command_t(), ascii::space_type> transmit;
         qi::rule<Iterator, hex128_t(), ascii::space_type> hex_16;
         qi::rule<Iterator, hex128_t(), ascii::space_type> hex_128;
         qi::rule<Iterator, hex128_t(), ascii::space_type> hex_96;

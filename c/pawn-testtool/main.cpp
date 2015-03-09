@@ -1,4 +1,4 @@
-// Copyright © 2014, Travis Snoozy
+// Copyright © 2014, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -150,6 +150,19 @@ public:
         }
 
         nodes.at(cmd.node);
+
+        return option_visitor_result::SUCCESS;
+    }
+
+    option_visitor_result operator()(const transmit_command_t& cmd)
+    {
+        node_data_t* node = nodes.find(cmd.node);
+        if(node == NULL)
+        {
+            return option_visitor_result::DOES_NOT_EXIST;
+        }
+
+        // TODO: Write this out to the designated serial port.
 
         return option_visitor_result::SUCCESS;
     }
