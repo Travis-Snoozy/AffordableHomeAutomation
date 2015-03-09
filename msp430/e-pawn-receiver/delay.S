@@ -1,4 +1,4 @@
-; Copyright © 2014, Travis Snoozy
+; Copyright © 2014, 2015, Travis Snoozy
 ;
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -18,14 +18,16 @@
 ; present).
 ; This routine assumes that the MSR430G is using its
 ; calibrated 16MHz frequency settings, and that it has
-; a maximum ±6% deviation from that frequency.
+; a maximum ±6% deviation from that frequency (per the
+; maximum tolerances listed in the datasheet).
 .global rfm70_pulse
 rfm70_pulse:
+mov	#55,			R15		; 2
+bis	#RFM70_B_ENABLE,	&RFM70_A_ENABLE	; 5
+; The chip's line is active. Now we wait.
 ; 3 * 55 = 165 cycles
 ; 170 cycles @ 16MHz + 6% = 10us
 ;            @ 16MHz - 6% = 11.3us
-mov	#55,			R15
-bis	#RFM70_B_ENABLE,	&RFM70_A_ENABLE
 .ldelay:
 dec	R15					; 1
 jnz	.ldelay					; 2
