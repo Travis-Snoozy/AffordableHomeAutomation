@@ -17,7 +17,6 @@
 source build-functions.sh
 
 CPPFLAGS="${CPPFLAGS}${CPPFLAGS:+,}-includeconfig.h"
-LSFLAGS="${LSFLAGS}${LSFLAGS:+,}-T../${MMCU}.x"
 build "e-pawn"
 
 # vim: set expandtab ts=4 sts=4 sw=4 fileencoding=utf-8:

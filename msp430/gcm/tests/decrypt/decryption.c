@@ -25,6 +25,12 @@
 #define FAIL_CRYPT  2
 #define FAIL_FAIL   4
 
+// FIXME
+// Something else is defining FAIL as a macro... we are a bit married
+// to using it as a symbol name at the moment, so hack it out. Change
+// the symbol name to something non-conflicting in the future.
+#undef FAIL
+
 // -------------------------------------------------------------------
 // Values set by debug script
 

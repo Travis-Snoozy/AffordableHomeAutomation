@@ -15,20 +15,20 @@
 
 .global timer_set
 timer_set:
-bic	#0x0010,	&__TA0CCTL0	; Disable interrupt
-mov	R12,		&__TA0CCR0	; Set next deadline
-bis	#0x0010,	&__TA0CCTL0	; Enable interrupt
+bic	#0x0010,	&TA0CCTL0	; Disable interrupt
+mov	R12,		&TA0CCR0	; Set next deadline
+bis	#0x0010,	&TA0CCTL0	; Enable interrupt
 ret
 
 .global timer_is_set
 timer_is_set:
-mov	&__TA0CCTL0,	R15
+mov	&TA0CCTL0,	R15
 and	#0x0010,	R15
 ret
 
 .global timer_clear
 timer_clear:
-bic.b	#0x10,		&__TA0CCTL0	; Disable interrupts
+bic.b	#0x10,		&TA0CCTL0	; Disable interrupts
 ret
 
 .global disable_interrupts

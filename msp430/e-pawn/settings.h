@@ -44,8 +44,8 @@ extern uint8_t safe_iv_rx[512];
 // section of ROM. We need two segments, so
 // that we can safely cut over from one
 // configuration to an updated configuration.
-extern info_t __infob;
-extern info_t __infoc;
+extern info_t infob;
+extern info_t infoc;
 
 // Acquire the currently active info segment.
 info_t* get_settings();

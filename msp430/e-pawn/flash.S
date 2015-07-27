@@ -16,22 +16,22 @@
 .text
 .global flash_unlock
 flash_unlock:
-mov	#FWKEY,		&__FCTL3
-mov	#FWKEY+WRT,	&__FCTL1
+mov	#FWKEY,		&FCTL3
+mov	#FWKEY+WRT,	&FCTL1
 ret
 
 .global flash_lock
 flash_lock:
-mov	#FWKEY,		&__FCTL1
-mov	#FWKEY+LOCK,	&__FCTL3
+mov	#FWKEY,		&FCTL1
+mov	#FWKEY+LOCK,	&FCTL3
 ret
 
 .global flash_erase
 flash_erase:
-mov	#FWKEY,		&__FCTL3
-mov	#FWKEY+ERASE,	&__FCTL1
+mov	#FWKEY,		&FCTL3
+mov	#FWKEY+ERASE,	&FCTL1
 mov.b	#0,		0(R12)
-mov	#FWKEY+LOCK,	&__FCTL3
+mov	#FWKEY+LOCK,	&FCTL3
 ret
 
 ; vim: set noexpandtab ts=8 sts=0 sw=8 fileencoding=utf-8:

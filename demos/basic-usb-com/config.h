@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "msp430g2412.h"
-
 #define SPI_A_T volatile unsigned char
 
 #define RFM70_A_IRQ P1IN

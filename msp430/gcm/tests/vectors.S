@@ -15,61 +15,61 @@
 
 .text
 POR:
-mov	#0x5A80,	&__WDTCTL	; Disable the watchdog timer
+mov	#0x5A80,	&WDTCTL		; Disable the watchdog timer
 mov	#0x0300,	R1		; Set the stack
-mov.b	#0x20,		&__BCSCTL3	; LFXT1 - use VLO for ACLK (no xtal)
+mov.b	#0x20,		&BCSCTL3	; LFXT1 - use VLO for ACLK (no xtal)
 call	#firmware_main
 					; I'll write you one very last op if you swear
 bis	#0x00D8,	R2		; You'll go the fuck to sleep
 ISR:
 reti
 
-.section __interrupt_vector_16,"ax",@progbits
+.section __interrupt_vector_1,"ax",@progbits
 .word   ISR     ; 0xFFE0
 
-.section __interrupt_vector_17,"ax",@progbits
+.section __interrupt_vector_2,"ax",@progbits
 .word   ISR
 
-.section __interrupt_vector_18,"ax",@progbits
+.section __interrupt_vector_3,"ax",@progbits
 .word   ISR   	; I/O Port 1
 
-.section __interrupt_vector_19,"ax",@progbits
+.section __interrupt_vector_4,"ax",@progbits
 .word   ISR   	; I/O Port 2
 
-.section __interrupt_vector_20,"ax",@progbits
+.section __interrupt_vector_5,"ax",@progbits
 .word   ISR     ; USI
 
-.section __interrupt_vector_21,"ax",@progbits
+.section __interrupt_vector_6,"ax",@progbits
 .word   ISR
 
-.section __interrupt_vector_22,"ax",@progbits
+.section __interrupt_vector_7,"ax",@progbits
 .word   ISR
 
-.section __interrupt_vector_23,"ax",@progbits
+.section __interrupt_vector_8,"ax",@progbits
 .word   ISR
 
-.section __interrupt_vector_24,"ax",@progbits
+.section __interrupt_vector_9,"ax",@progbits
 .word   ISR     ; Timer0_A3 (ACCR0)
 
-.section __interrupt_vector_25,"ax",@progbits
+.section __interrupt_vector_10,"ax",@progbits
 .word   ISR     ; Timer0_A3 (ACCR2, ACCR1, TA)
 
-.section __interrupt_vector_26,"ax",@progbits
+.section __interrupt_vector_11,"ax",@progbits
 .word   ISR     ; Watchdog
 
-.section __interrupt_vector_27,"ax",@progbits
+.section __interrupt_vector_12,"ax",@progbits
 .word   ISR     ; Comparator
 
-.section __interrupt_vector_28,"ax",@progbits
+.section __interrupt_vector_13,"ax",@progbits
 .word   ISR
 
-.section __interrupt_vector_29,"ax",@progbits
+.section __interrupt_vector_14,"ax",@progbits
 .word   ISR
 
-.section __interrupt_vector_30,"ax",@progbits
+.section __interrupt_vector_15,"ax",@progbits
 .word   ISR     ; NMI, osc fault, flash violation
 
-.section __interrupt_vector_31,"ax",@progbits
+.section __reset_vector,"ax",@progbits
 .word   POR     ; POR, RST, WDT, KEYV
 
 ;.section .vectors,"ax",@progbits

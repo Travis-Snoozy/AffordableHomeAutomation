@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.                                        
 
-#include "msp430g2412.h"
-
 /*
 MSP430G2412
 Batt+   VCC _/| |\_GND  Batt-

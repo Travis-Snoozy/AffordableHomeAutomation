@@ -34,6 +34,8 @@ safe_iv_rx:
 .skip 512, 0xFF
 
 .section .infob,"ax",@progbits
+.global infob
+infob:
 .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 .byte 0,0,0,0,0,0,0,0,0,0,0,0
 .byte 0,0,0,0,0,0,0,0,0,0,0,0
@@ -43,6 +45,8 @@ safe_iv_rx:
 .byte 0xFF
 
 .section .infoc,"ax",@progbits
+.global infoc
+infoc:
 .byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 .byte 0,0,0,0,0,0,0,0,0,0,0,0
 .byte 0,0,0,0,0,0,0,0,0,0,0,0

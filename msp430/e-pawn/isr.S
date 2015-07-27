@@ -19,7 +19,7 @@
 .global P1ISR
 P1ISR:
 call	#MCISR_P1
-clr.b	&__P1IFG
+clr.b	&P1IFG
 reti
 #endif
 
@@ -27,7 +27,7 @@ reti
 .global P2ISR
 P2ISR:
 call	#MCISR_P2
-clr.b	&__P2IFG
+clr.b	&P2IFG
 reti
 #endif
 
@@ -100,70 +100,70 @@ reti
 
 .global PORISR
 PORISR:
-mov	#(WDTHOLD+WDTPW),&__WDTCTL	; Disable the watchdog timer
+mov	#(WDTHOLD+WDTPW),&WDTCTL	; Disable the watchdog timer
 mov	#0x0300,	R1		; Set the stack
-mov.b	#XCAP_3,	&__BCSCTL3	; LFXT1 - use 32.768KHz with 12.5pF capacitance
+mov.b	#XCAP_3,	&BCSCTL3	; LFXT1 - use 32.768KHz with 12.5pF capacitance
 
 #ifdef MCBCSCTL
-mov.b	MCBCSCTL,	&__BCSCTL1
+mov.b	MCBCSCTL,	&BCSCTL1
 #endif
 #ifdef MCDCOCTL
-mov.b	MCDCOCTL,	&__DCOCTL
+mov.b	MCDCOCTL,	&DCOCTL
 #endif
 
-mov.b	#MCP1F1,	&__P1SEL	; Select I/O functions
-mov.b	#MCP1F2,	&__P1SEL2	;
+mov.b	#MCP1F1,	&P1SEL	; Select I/O functions
+mov.b	#MCP1F2,	&P1SEL2	;
 
-mov.b	#MCP2F1,	&__P2SEL	; Select I/O functions
-mov.b	#MCP2F2,	&__P2SEL2	;
+mov.b	#MCP2F1,	&P2SEL	; Select I/O functions
+mov.b	#MCP2F2,	&P2SEL2	;
 
-mov.b	#MCIODIR1,	&__P1DIR	; Set P1 I/O directions
-mov.b	#MCIODIR2,	&__P2DIR	; Set P2 I/O directions
+mov.b	#MCIODIR1,	&P1DIR	; Set P1 I/O directions
+mov.b	#MCIODIR2,	&P2DIR	; Set P2 I/O directions
 
-mov.b	#MCRESDIR1,	&__P1OUT	; Set output/resistor direction
-mov.b	#MCRESDIR2,	&__P2OUT	; Set output/resistor direction
+mov.b	#MCRESDIR1,	&P1OUT	; Set output/resistor direction
+mov.b	#MCRESDIR2,	&P2OUT	; Set output/resistor direction
 
-mov.b	#MCRESEN1,	&__P1REN	; Enable resistors
-mov.b	#MCRESEN2,	&__P2REN	; Enable resistors
+mov.b	#MCRESEN1,	&P1REN	; Enable resistors
+mov.b	#MCRESEN2,	&P2REN	; Enable resistors
 
 call	#MCISR_POR
 
-mov.b	#MCIRQES1,	&__P1IES	; High-to-low triggers
-mov.b	#MCIRQES2,	&__P2IES	; 
+mov.b	#MCIRQES1,	&P1IES	; High-to-low triggers
+mov.b	#MCIRQES2,	&P2IES	;
 
 #ifdef MCUSI
-mov.b	#MCUSI0,	&__USICTL0	; Set up USI
-mov.b	#MCUSI1,	&__USICTL1	;
-mov.b	#MCUSICK,	&__USICKCTL	;
+mov.b	#MCUSI0,	&USICTL0	; Set up USI
+mov.b	#MCUSI1,	&USICTL1	;
+mov.b	#MCUSICK,	&USICKCTL	;
 #endif
 
 #ifdef MCTACCR0
-mov.b	#MCTACCR0,	&__TA0CCR0	; Set up Timer_A
+mov.b	#MCTACCR0,	&TA0CCR0	; Set up Timer_A
 #endif
 #ifdef MCTACCR1
-mov.b	#MCTACCR1,	&__TA0CCR1	;
+mov.b	#MCTACCR1,	&TA0CCR1	;
 #endif
 #ifdef MCTACCR2
-mov.b	#MCTACCR2,	&__TA0CCR2	;
+mov.b	#MCTACCR2,	&TA0CCR2	;
 #endif
 #ifdef MCTACCTL0
-mov.b	#MCTACCTL0,	&__TA0CCTL0	;
+mov.b	#MCTACCTL0,	&TA0CCTL0	;
 #endif
 #ifdef MCTACCTL1
-mov.b	#MCTACCTL1,	&__TA0CCTL1	;
+mov.b	#MCTACCTL1,	&TA0CCTL1	;
 #endif
 #ifdef MCTACCTL2
-mov.b	#MCTACCTL2,	&__TA0CCTL2	;
+mov.b	#MCTACCTL2,	&TA0CCTL2	;
 #endif
 #ifdef MCTACTL
-mov.b	#MCTACTL,	&__TA0CTL	;
+mov.b	#MCTACTL,	&TA0CTL	;
 #endif
 
-clr.b	&__P1IFG			; Clear flags
-clr.b	&__P2IFG
+clr.b	&P1IFG			; Clear flags
+clr.b	&P2IFG
 
-mov.b	#MCIRQEN1,	&__P1IE		; Enable IRQs
-mov.b	#MCIRQEN2,	&__P2IE		;
+mov.b	#MCIRQEN1,	&P1IE		; Enable IRQs
+mov.b	#MCIRQEN2,	&P2IE		;
 
 					; I'll write you one very last op if you swear
 bis	#(LPM3_bits+GIE),R2		; You'll go the fuck to sleep

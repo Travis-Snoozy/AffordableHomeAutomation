@@ -19,12 +19,12 @@ info_t* get_settings()
 {
     // If infob is unwritten/erased, use_c will be 0xFF (meaning we
     // should use infoc instead).
-    if(__infob.use_c == 0)
+    if(infob.use_c == 0)
     {
-        return &__infob;
+        return &infob;
     }
 
-    return &__infoc;
+    return &infoc;
 
     // The following procedure ensures we can safely switch between
     // the infob and infoc sections:

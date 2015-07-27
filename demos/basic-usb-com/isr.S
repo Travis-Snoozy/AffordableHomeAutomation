@@ -43,16 +43,16 @@
 .text
 .global debug_wait
 debug_wait:
-bis.b	#0x10,		&__P2OUT	; Turn on the LED
+bis.b	#0x10,		&P2OUT	; Turn on the LED
 bis	#0x00D8,	R2		; Go to sleep.
 ret
 
 .global IOISR
 IOISR:
-bic.b	#0x10,		&__P2OUT	; Turn off the LED
+bic.b	#0x10,		&P2OUT	; Turn off the LED
 call	#firmware_io_isr
-clr.b	&__P2IFG
-clr.b	&__P1IFG
+clr.b	&P2IFG
+clr.b	&P1IFG
 bic	#0x00D0, 	0(R1)		; Stay awake after return.
 .global ISR
 ISR:
@@ -60,31 +60,31 @@ reti
 
 .global PORISR
 PORISR:
-mov	#0x5A80,	&__WDTCTL	; Disable the watchdog timer
+mov	#0x5A80,	&WDTCTL	; Disable the watchdog timer
 mov	#0x0300,	R1		; Set the stack
-mov.b	#0x20,		&__BCSCTL3	; LFXT1 - use VLO for ACLK (no xtal)
+mov.b	#0x20,		&BCSCTL3	; LFXT1 - use VLO for ACLK (no xtal)
 
-clr.b	&__P1SEL			; Select I/O only
-clr.b	&__P1SEL2			;
+clr.b	&P1SEL			; Select I/O only
+clr.b	&P1SEL2			;
 
-clr.b	&__P2SEL			; Select I/O only
-clr.b	&__P2SEL2			;
+clr.b	&P2SEL			; Select I/O only
+clr.b	&P2SEL2			;
 
-mov.b	#0x0F,		&__P1DIR	; Set P1 I/O directions
-mov.b	#0x1F,		&__P2DIR	; Set P2 I/O directions
+mov.b	#0x0F,		&P1DIR	; Set P1 I/O directions
+mov.b	#0x1F,		&P2DIR	; Set P2 I/O directions
 
-mov.b	#0x26,		&__P1OUT	; Set output/resistor direction
-mov.b	#0x00,		&__P2OUT	; Set output/resistor direction
+mov.b	#0x26,		&P1OUT	; Set output/resistor direction
+mov.b	#0x00,		&P2OUT	; Set output/resistor direction
 
-mov.b	#0x20,		&__P1REN	; Enable resistors
-mov.b	#0x20,		&__P2REN	; Enable resistors
+mov.b	#0x20,		&P1REN	; Enable resistors
+mov.b	#0x20,		&P2REN	; Enable resistors
 
-mov.b	#0x20,		&__P1IES	; High-to-low wireless IRQ trigger
-mov.b	#0x20,		&__P2IES	; High-to-low debug trigger
-clr.b	&__P1IFG			; Clear flags
-clr.b	&__P2IFG
-mov.b	#0x20,		&__P1IE		; Enable wireless IRQ + switch IRQs
-mov.b	#0x20,		&__P2IE		; Enable switch IRQ
+mov.b	#0x20,		&P1IES	; High-to-low wireless IRQ trigger
+mov.b	#0x20,		&P2IES	; High-to-low debug trigger
+clr.b	&P1IFG			; Clear flags
+clr.b	&P2IFG
+mov.b	#0x20,		&P1IE		; Enable wireless IRQ + switch IRQs
+mov.b	#0x20,		&P2IE		; Enable switch IRQ
 
 call	#firmware_main
 nowhere:

@@ -29,40 +29,40 @@
 .global P2ISR
 P2ISR:
 call	#firmware_io_isr
-clr.b	&__P2IFG
-clr.b	&__P1IFG
+clr.b	&P2IFG
+clr.b	&P1IFG
 .global ISR
 ISR:
 reti
 
 .global PORISR
 PORISR:
-mov	#0x5A80,	&__WDTCTL	; Disable the watchdog timer
+mov	#0x5A80,	&WDTCTL	; Disable the watchdog timer
 mov	#0x0300,	R1		; Set the stack
-mov.b	#0x20,		&__BCSCTL3	; LFXT1 - use VLO for ACLK (no xtal)
+mov.b	#0x20,		&BCSCTL3	; LFXT1 - use VLO for ACLK (no xtal)
 
-clr.b	&__P1SEL			; Select I/O only
-clr.b	&__P1SEL2			;
+clr.b	&P1SEL			; Select I/O only
+clr.b	&P1SEL2			;
 
-clr.b	&__P2SEL			; Select I/O only
-clr.b	&__P2SEL2			;
+clr.b	&P2SEL			; Select I/O only
+clr.b	&P2SEL2			;
 
-mov.b	#0x8F,		&__P1DIR	; Set P1 I/O directions
-mov.b	#0x3F,		&__P2DIR	; Set P2 I/O directions
+mov.b	#0x8F,		&P1DIR	; Set P1 I/O directions
+mov.b	#0x3F,		&P2DIR	; Set P2 I/O directions
 
-mov.b	#0x60,		&__P1OUT	; Set output/resistor direction
-mov.b	#0xC0,		&__P2OUT	; Set output/resistor direction
+mov.b	#0x60,		&P1OUT	; Set output/resistor direction
+mov.b	#0xC0,		&P2OUT	; Set output/resistor direction
 
-mov.b	#0x60,		&__P1REN	; Enable resistors
-mov.b	#0xC0,		&__P2REN	; Enable resistors
+mov.b	#0x60,		&P1REN	; Enable resistors
+mov.b	#0xC0,		&P2REN	; Enable resistors
 
 call	#firmware_main
 
-mov.b	#0x20,		&__P1IES	; High-to-low wireless IRQ trigger
-clr.b	&__P1IFG			; Clear flags
-clr.b	&__P2IFG
-mov.b	#0x60,		&__P1IE		; Enable wireless IRQ + switch IRQs
-mov.b	#0xC0,		&__P2IE		; Enable switch IRQ
+mov.b	#0x20,		&P1IES	; High-to-low wireless IRQ trigger
+clr.b	&P1IFG			; Clear flags
+clr.b	&P2IFG
+mov.b	#0x60,		&P1IE		; Enable wireless IRQ + switch IRQs
+mov.b	#0xC0,		&P2IE		; Enable switch IRQ
 
 					; I'll write you one very last op if you swear
 bis	#0x00D8,	R2		; You'll go the fuck to sleep
