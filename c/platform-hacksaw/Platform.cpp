@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ IDevice* Platform::getDevice(uint64_t device) const
         return nullptr;
     }
 
-    return ((*it).second.first);
+    return ((*it).second.first.get());
 }
 
 const char* Platform::getName() const
@@ -49,12 +49,12 @@ const char* Platform::getName() const
 
 void Platform::iterateDevices(boost::function<void(IDevice*)> dev) const
 {
-    std::for_each(this->m_devices.begin(), this->m_devices.end(), [&](std::pair<uint64_t, std::pair<IDevice*, std::map<uint32_t, IFunction*>>> dev_data) {
-        dev(dev_data.second.first);
+    std::for_each(this->m_devices.begin(), this->m_devices.end(), [&](const std::pair<const uint64_t, std::pair<std::unique_ptr<Device>, std::map<uint32_t, Function*>>>& dev_data) {
+        dev(dev_data.second.first.get());
     });
 }
 
-void Platform::notify(IFunction* func)
+void Platform::notify(Function* func)
 {
     if(this->m_devices.find(func->getDevice()) == this->m_devices.end()) {
         return;
@@ -65,19 +65,20 @@ void Platform::notify(IFunction* func)
     this->m_deviceChange(func);
 }
 
-bool Platform::notify(IDevice* device, bool add)
+bool Platform::notify(Device* device, bool add)
 {
     bool exists = (this->m_devices.find(device->getSerial()) != this->m_devices.end());
 
     if(add && !exists) {
-        this->m_devices[device->getSerial()].first = device;
+        this->m_devices[device->getSerial()].first.reset(device);
+        this->m_platformChange(device);
     } else if(!add && exists) {
+        this->m_platformChange(device);
         this->m_devices.erase(device->getSerial());
     } else {
         return false;
     }
 
-    this->m_platformChange(device);
     return true;
 }
 

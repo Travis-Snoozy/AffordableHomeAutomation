@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,11 +22,16 @@
 #include "aha-platform/AhaMacroGlue.h"
 #include "aha-platform/IDevice.h"
 #include "aha-platform/IFunction.h"
+#include "aha-platform/Plugin.h"
 
 #include "Server.h"
 
 namespace ahaplat
 {
+
+class Device;
+class Function;
+
 class Platform : virtual public IPlatform
 {
 public:
@@ -36,13 +41,13 @@ public:
     IDevice*            getDevice(uint64_t device) const;
     virtual const char* getName() const;
     virtual void        iterateDevices(boost::function<void(IDevice*)> dev) const;
-    virtual void        notify(IFunction* func);
-    virtual bool        notify(IDevice* device, bool add);
+    virtual void        notify(Function* func);
+    virtual bool        notify(Device* device, bool add);
     virtual void        start();
 private:
     PPlatformChange     m_platformChange;
     PDeviceChange       m_deviceChange;
-    std::map<uint64_t, std::pair<IDevice*, std::map<uint32_t, IFunction*>>> m_devices;
+    std::map<uint64_t, std::pair<std::unique_ptr<Device>, std::map<uint32_t, Function*>>> m_devices;
     Server              m_server;
 };
 }

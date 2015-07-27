@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
@@ -24,23 +24,20 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Generic SPI bit-bang code
-// Version: 0.1.0
+/*! \file
+ * Generic SPI bit-bang code.
+ */
 
 #include "spi.h"
 
-// SPI_A_CLOCK -- Address for the clocking pin
-// SPI_B_CLOCK -- Bit for the clocking pin
-// SPI_A_MISO  -- Address for the MISO pin
-// SPI_B_MISO  -- Bit for the MISO pin
-// SPI_A_MOSI  -- Address for the MOSI pin
-// SPI_B_MOSI  -- Bit for the MOSI pin
-// SPI_A_T     -- The type of address the target arch uses for its I/O
-
-// SPI_A_ENABLE-- Address for the CS/enable pin
+/*!
+ * Address of the currently-active SPI device's CS/enable pin.
+ */
 static SPI_A_T* SPI_A_ENABLE;
 
-// SPI_B_ENABLE-- Bit for the CS/enable pin
+/*!
+ * OR mask to set (disable) the currently-active SPI device's CS/enable pin.
+ */
 static SPI_A_T SPI_B_ENABLE;
 
 void spi_init()
@@ -61,13 +58,17 @@ void spi_init()
 
 int spi_select(SPI_A_T* address, uint8_t bit)
 {
+    // Stay in bounds, don't allow selecting of NULL.
     if(bit >= (sizeof(SPI_A_T) * 8) || address == 0)
     {
         return -1;
     }
 
+    // We have to shut down whatever was previously running before we can change
+    // devices (and counting on the caller to do that is asking for tears).
     spi_stop();
 
+    // Load up the data for the newly-selected device.
     SPI_A_ENABLE = address;
     SPI_B_ENABLE = (1 << bit);
 

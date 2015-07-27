@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,9 +19,16 @@
 
 namespace ahaplat
 {
+/*!
+ * The interface for device functions that provide streaming information,
+ * rather than discrete value readings.
+ */
 class IFileFunction : virtual public IFunction
 {
 public:
+    /*!
+     * Gets the MIME type associated with the data stream this function provides.
+     */
     virtual const char* getMediaType() const = 0;
 protected:
 private:

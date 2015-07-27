@@ -13,14 +13,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "aha-platform/AhaMacroGlue.h"
 #include "platform-hacksaw/Parser.h"
 
 namespace ahaplat
 {
 namespace parser
 {
-command_type_table_ command_type_table;
-device_type_table_ device_type_table;
+AHA_PRIVATE command_type_table_ command_type_table;
+AHA_PRIVATE device_type_table_ device_type_table;
 }
 }
 

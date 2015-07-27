@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ public:
     }
 
     std::string operator()(parser::client_command_delete& command) const {
-        IDevice* device = ::platform->getDevice(command);
+        Device* device = dynamic_cast<Device*>(::platform->getDevice(command));
 
         if(device == nullptr) {
             return buildError("Failed to get device with requested ID.");

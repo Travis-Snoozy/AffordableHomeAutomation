@@ -1,5 +1,5 @@
-// Copyright © 2013, Travis Snoozy
-// 
+// Copyright © 2013, 2015, Travis Snoozy
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -13,8 +13,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/*! \file
+ * Driver code for FTDI FT220x USB virtual COM chips.
+ */
+
 #include "ft220x.h"
 #include "spi.h"
+
+// Preproc stuff; yell at the consumer if they're trying to compile this
+// driver with an invalid set of macros defined.
 
 #if FT220X_WIDTH != 1 && FT220X_WIDTH != 2 && FT220X_WIDTH != 4
   #error "You must define FT220X_WIDTH as 1, 2, or 4."
@@ -78,16 +85,25 @@
   #endif
 #endif
 
+/*!
+ * Represents a data input line.
+ */
 typedef struct {
-    const SPI_A_T* address;
-    SPI_A_T mask;
+    const SPI_A_T* address; ///< The address the input line's data exists at.
+    SPI_A_T mask;           ///< The AND mask to extract the input's line data from the value at its address.
 } ft220x_iline_t;
 
+/*!
+ * Represents a data output line.
+ */
 typedef struct {
-    SPI_A_T* address;
-    SPI_A_T mask;
+    SPI_A_T* address;   ///< The address the output line's data should be written to.
+    SPI_A_T mask;       ///< The OR mask used to set the output line at its address.
 } ft220x_oline_t;
 
+/*!
+ * Represents all of the configured input lines for the chip.
+ */
 static const ft220x_iline_t ilines[] = {
     { FT220X_A_MISO_0, FT220X_B_MISO_0 },
 #if FT220X_WIDTH > 1
@@ -99,6 +115,9 @@ static const ft220x_iline_t ilines[] = {
 #endif
 };
 
+/*!
+ * Represents all of the configured output lines for the chip.
+ */
 static const ft220x_oline_t olines[] = {
     { FT220X_A_MOSI_0, FT220X_B_MOSI_0 },
 #if FT220X_WIDTH > 1
@@ -161,7 +180,7 @@ uint8_t ft220x_write(int16_t command, uint8_t* data)
     }
 
     SPI_A_CLOCK ^= SPI_B_CLOCK;
-    
+
     // Capture the buffer status
     retval |= (SPI_A_MISO & SPI_B_MISO) ? 0x01 : 0x00;
 
@@ -210,7 +229,7 @@ uint8_t ft220x_write(int16_t command, uint8_t* data)
                     }
                 }
             }
-            
+
             // Clock, turnaround, chip deselect
             SPI_A_CLOCK ^= SPI_B_CLOCK;
 

@@ -1,4 +1,4 @@
-// Copyright © 2013, Travis Snoozy
+// Copyright © 2013, 2015, Travis Snoozy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,21 +17,34 @@
 
 #include <cstdint>
 
-namespace ahaplat
-{
-class IDevice;
-}
-
 #include "IPlatform.h"
 
 namespace ahaplat
 {
+/*!
+ * The interface that all devices must conform to.
+ */
 class IDevice
 {
 public:
+    /*!
+     * Gets a brief description of the device's functionality.
+     */
     virtual const char* getDescription()    const = 0;
+
+    /*!
+     * Gets the name (e.g., one word description) of this device.
+     */
     virtual const char* getName()           const = 0;
+
+    /*!
+     * Gets the platform plugin that this device is registered to.
+     */
     virtual IPlatform*  getPlatform()       const = 0;
+
+    /*!
+     * Gets the unique serial number that identifies this device within its platform.
+     */
     virtual uint64_t    getSerial(void)     const = 0;
 protected:
 private:
