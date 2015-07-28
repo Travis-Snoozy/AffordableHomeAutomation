@@ -13,6 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-void ft220x_pulse();
+void rfm70_pulse();
 
 // vim: set expandtab ts=4 sts=4 sw=4 fileencoding=utf-8:

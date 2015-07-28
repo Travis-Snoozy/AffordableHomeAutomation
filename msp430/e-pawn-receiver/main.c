@@ -62,8 +62,10 @@
 
 #include "string.h"
 #include "stddef.h"
+#include "spi.h"
 #include "rfm70.h"
 #include "ft220x.h"
+#include "timer.h"
 #include "delay.h"
 #include "pawn.h"
 
@@ -206,6 +208,11 @@ uint8_t load_txdata()
     // Read data off the COM
     // Read the command byte
     do {
+        // Use a straight read instead of a com read, because we don't
+        // actually want to block in the case where there is nothing
+        // to pull off the chip.
+        // FIXME this needs to be made public, or hacked in as a local
+        // declaration or something.
         if(ft220x_write(FT220X_CMD_READ, &queue[queue_next].size)) {
             return 1;
         }

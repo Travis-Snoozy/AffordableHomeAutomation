@@ -17,6 +17,7 @@
 #include "string.h"
 #include "settings.h"
 #include "aes.h"
+#include "flash.h"
 
 void aes_init_recalc(info_t* settings)
 {

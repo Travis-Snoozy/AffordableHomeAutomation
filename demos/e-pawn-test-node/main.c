@@ -15,6 +15,7 @@
 
 #include "stddef.h"
 #include "string.h"
+#include "spi.h"
 #include "rfm70.h"
 #include "settings.h"
 #include "aes_init.h"

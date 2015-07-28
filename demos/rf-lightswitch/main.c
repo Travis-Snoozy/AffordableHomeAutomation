@@ -14,6 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "stddef.h"
+#include "spi.h"
 #include "rfm70.h"
 
 //#define RFM70_BUILD_RX
